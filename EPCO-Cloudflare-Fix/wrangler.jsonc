@@ -1,0 +1,20 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "epcoispl-com",
+  "main": "hosting/cloudflare/worker.mjs",
+  "compatibility_date": "2025-11-01",
+  "workers_dev": true,
+  "keep_vars": true,
+  "build": { "command": "npm run build:cloudflare" },
+  "assets": {
+    "directory": "./public-cloudflare",
+    "binding": "ASSETS",
+    "html_handling": "none",
+    "run_worker_first": ["/", "/api/*"]
+  },
+  "durable_objects": {
+    "bindings": [{ "name": "ENQUIRIES", "class_name": "EnquiryRegister" }]
+  },
+  "migrations": [{ "tag": "epco-enquiries-v1", "new_sqlite_classes": ["EnquiryRegister"] }],
+  "vars": { "SITE_URL": "https://epcoispl.com/", "ENQUIRY_RETENTION_DAYS": "90", "ENQUIRY_TO": "epcoispl@gmail.com" }
+}

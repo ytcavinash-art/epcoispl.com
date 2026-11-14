@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Disallow: /in/api/
+Sitemap: https://www.epcoispl.com/in/sitemap.xml

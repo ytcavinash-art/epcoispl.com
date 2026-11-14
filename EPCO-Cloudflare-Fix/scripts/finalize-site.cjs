@@ -1,0 +1,38 @@
+const fs=require('node:fs'),path=require('node:path');
+const root=path.resolve(__dirname,'..'),read=f=>fs.readFileSync(path.join(root,f),'utf8'),write=(f,t)=>fs.writeFileSync(path.join(root,f),t,'utf8');
+const base=new URL(process.env.SITE_URL||'https://www.epcoispl.com/in/');
+if(!/^https?:$/.test(base.protocol)||base.search||base.hash)throw new Error('SITE_URL must be an HTTP(S) base URL without query or fragment.');
+if(!base.pathname.endsWith('/'))base.pathname+='/';
+const esc=s=>s.replaceAll('&','&amp;').replaceAll('"','&quot;').replaceAll('<','&lt;');
+const files=fs.readdirSync(root).filter(f=>f.endsWith('.html')).sort();
+const contactIcon=kind=>`<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${kind==='pin'?'<path d="M20 10c0 6-8 11-8 11S4 16 4 10a8 8 0 1 1 16 0Z"></path><circle cx="12" cy="10" r="2.5"></circle>':kind==='phone'?'<path d="m8 3 3 5-3 3a15 15 0 0 0 5 5l3-3 5 3c-1 5-4 6-8 4C7 17 3 12 3 7c0-2 2-4 5-4Z"></path>':'<rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path>'}</svg>`;
+const officeAddress='A103 Bldg No1 5 41-P 4, Shastri Bunglow Andheri W, Andheri Railway Station, Mumbai, Mumbai- 400058, Maharashtra';
+const registeredAddress='B/301, Sky Heights, Evershine City, Vasai, Maharashtra 401208, India';
+const contactRow=(kind,label,url,text,external=false)=>`<div class="contact-row"><span class="contact-icon">${contactIcon(kind)}</span><div class="contact-copy"><span class="contact-label">${label}</span><a href="${esc(url)}"${external?' target="_blank" rel="noopener noreferrer"':''}>${text}</a></div></div>`;
+const contactRows=contactRow('pin','Office',`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(officeAddress)}`,officeAddress,true)+contactRow('phone','Call us','tel:+919167485843','+91 91674 85843')+contactRow('email','Email us','mailto:epcoispl@gmail.com','epcoispl@gmail.com')+contactRow('pin','Registered office',`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(registeredAddress)}`,registeredAddress,true);
+for(const file of files){let html=read(file);
+ html=html.replace(/<footer\b[\s\S]*?<\/footer>/,part=>part.replace('<a href="privacy.html">Privacy information</a>','').replace('<a href="terms.html">Terms and conditions</a>',''));
+ html=html.replace(/<(small|figcaption)\b[^>]*>\s*Illustrative image\.?\s*<\/\1>/gi,'').replace(/<p\b[^>]*>\s*Service images are illustrative\.?\s*<\/p>/gi,'');
+ const envelope='<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path></svg>';
+ html=html.replace(/<header\b[\s\S]*?<\/header>/,part=>part.includes('class="header-email"')?part:part.replace('</nav>',`<a class="header-email" href="mailto:epcoispl@gmail.com" aria-label="Email EPCO at epcoispl@gmail.com" title="epcoispl@gmail.com">${envelope}<span class="sr-only">epcoispl@gmail.com</span></a></nav>`));
+ html=html.replace(/<footer\b[\s\S]*?<\/footer>/,part=>part.replace('<a href="mailto:epcoispl@gmail.com">epcoispl@gmail.com</a>',`<a class="footer-email" href="mailto:epcoispl@gmail.com">${envelope}<span>epcoispl@gmail.com</span></a>`));
+ html=html.replace(/<footer\b[\s\S]*?<\/footer>/,part=>part.replace(/<div(?: class="footer-contact")?><h2>Contact<\/h2>[\s\S]*?<\/div>(?=<div><h2>Information)/,`<div class="footer-contact"><h2>Contact</h2>${contactRows}</div>`));
+ html=html.replace(/<div class="contact-details">[\s\S]*?<\/div><\/div><\/section>/,`<div class="contact-details">${contactRows}</div></div></section>`);
+ const title=html.match(/<title>([\s\S]*?)<\/title>/)[1];
+ const description=html.match(/<meta name="description" content="([^"]*)"/)?.[1]||'EPCO Integrated Solutions';
+ const url=new URL(file==='index.html'?'':file,base).href;
+ html=html.replace(/<link rel="canonical"[^>]*>/g,'').replace(/<meta (?:property="og:[^"]+"|name="twitter:[^"]+")[^>]*>/g,'').replace(/<link rel="icon"[^>]*>/g,'');
+ html=html.replace('</head>',`<link rel="canonical" href="${esc(url)}"><link rel="icon" href="favicon.svg" type="image/svg+xml"><meta property="og:type" content="website"><meta property="og:site_name" content="EPCO Integrated Solutions"><meta property="og:title" content="${title}"><meta property="og:description" content="${description}"><meta property="og:url" content="${esc(url)}"><meta property="og:image" content="${esc(new URL('assets/hero-mumbai.webp',base).href)}"><meta property="og:image:alt" content="Illustrative building project"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${title}"><meta name="twitter:description" content="${description}"><meta name="twitter:image" content="${esc(new URL('assets/hero-mumbai.webp',base).href)}"></head>`);
+ html=html.replace(/<a class="skip-link"[^>]*>[\s\S]*?<\/a>/g,'').replace('<body>','<body><a class="skip-link" href="#main-content">Skip to main content</a>').replace(/<main(?: id="main-content")?>/,'<main id="main-content" tabindex="-1">');
+ html=html.replace(/<div class="label( light)?">\d+\s*\/\s*/g,'<div class="label$1">');
+ html=html.replace(/<img\b[^>]*>/g,tag=>{
+  if(/assets\/engineering-bim-team(?:\.png|-\d+\.jpg)/.test(tag))return '<img src="assets/engineering-bim-team-480.jpg" srcset="assets/engineering-bim-team-480.jpg 480w, assets/engineering-bim-team-960.jpg 960w" sizes="(max-width: 480px) 88vw, (max-width: 800px) 42vw, 22vw" width="1672" height="941" alt="Engineering team coordinating BIM designs and project drawings" loading="lazy" decoding="async" class="service-photo">';
+  if(/assets\/subramanian-sekar(?:\.png|-\d+\.jpg)/.test(tag))return '<img src="assets/subramanian-sekar-420.jpg" srcset="assets/subramanian-sekar-420.jpg 420w, assets/subramanian-sekar-840.jpg 840w" sizes="(max-width: 520px) 88vw, (max-width: 800px) 460px, 420px" width="1254" height="1254" alt="Subramanian Sekar, Chief Executive Officer of EPCO" loading="lazy" decoding="async">';
+  if(tag.includes('assets/logo.png')&&!tag.includes('width='))return tag.replace('<img','<img width="154" height="55"');
+  return tag;
+ });
+ write(file,html);
+}
+write('sitemap.xml',`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${files.map(file=>`  <url><loc>${esc(new URL(file==='index.html'?'':file,base).href)}</loc></url>`).join('\n')}\n</urlset>\n`);
+write('robots.txt',`User-agent: *\nAllow: /\nDisallow: ${base.pathname}api/\nSitemap: ${new URL('sitemap.xml',base).href}\n`);
+console.log(`Finalized ${files.length} pages: skip links, responsive photos, canonical/social metadata, favicon and sitemap. Site URL: ${base.href}`);

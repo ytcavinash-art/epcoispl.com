@@ -1,0 +1,426 @@
+[
+  {
+    "slug": "hvac-maintenance",
+    "title": "Mechanical & HVAC",
+    "short": "HVAC",
+    "summary": "Cooling, ventilation and indoor air quality systems, from supply, installation and commissioning through operation and maintenance.",
+    "groups": [
+      {
+        "title": "System delivery & annual contracts",
+        "items": [
+          "Supply, installation, testing and commissioning of central chilled-water, VRF and packaged air-conditioning systems within the agreed project scope.",
+          "Precision air-conditioning for server rooms, control rooms and process areas.",
+          "Ventilation and smoke-exhaust design coordination, installation and approval liaison where contracted.",
+          "Annual maintenance contracts (AMC) and comprehensive annual maintenance contracts (CAMC), with system coverage and exclusions agreed in writing."
+        ]
+      },
+      {
+        "title": "Cooling & ventilation",
+        "items": [
+          "Operation and monitoring of chillers, AHUs, FCUs, VRF/VRV systems and packaged air-conditioning units.",
+          "Cooling tower inspection, basin cleaning, water-level checks and performance monitoring.",
+          "Basement ventilation, smoke extraction, toilet exhaust fans and kitchen hood systems.",
+          "Air-filter cleaning and replacement, duct cleaning and fresh-air optimisation for indoor air quality."
+        ]
+      },
+      {
+        "title": "Mechanical inspections & repairs",
+        "items": [
+          "Inspection of motors, compressors, pumps, chilled-water pipes, valves, strainers, insulation and flexible connections.",
+          "Refrigerant leak checks and monitoring of system pressures, temperatures and operating performance.",
+          "Lubrication of bearings and moving parts; checks of belts, pulleys, couplings, vibration and abnormal noise.",
+          "Breakdown attendance, fault diagnosis, minor repairs and approved component replacement."
+        ]
+      },
+      {
+        "title": "Controls & operating records",
+        "items": [
+          "Inspection of thermostats, sensors, actuators and HVAC control panels.",
+          "Monitoring of BMS alarms, temperature settings and equipment operating schedules.",
+          "HVAC logs, equipment history, energy readings and preventive maintenance checklists."
+        ]
+      },
+      {
+        "title": "Specialist utility systems",
+        "items": [
+          "Coordination of maintenance for compressed-air, steam and process cooling-water systems where installed and contracted.",
+          "Specialist coordination for PNG, LPG and HSD fuel piping within the agreed site scope."
+        ]
+      }
+    ],
+    "resources": [
+      "Equipment: chillers, AHUs, FCUs, VRF units, ventilation fans, pumps and motors.",
+      "Tools: pipe benders, duct cutters, hydraulic crimpers, welding and pipe-threading equipment, as required for approved work.",
+      "Instruments: anemometers, digital manometers, leak detectors and temperature/humidity data loggers.",
+      "Spares: air and HEPA filters, V-belts, bearings, thermostats, specified refrigerants, insulation, condensate pipes, seals, gland packing, couplings, vibration pads and alignment shims."
+    ],
+    "note": "Specialist repairs, refrigerant work, utility piping and pump maintenance are defined and priced in the agreed scope; OEM or specialist attendance is coordinated where required."
+  },
+  {
+    "slug": "electrical-maintenance",
+    "title": "Electrical & Power Systems",
+    "short": "Electrical & Power",
+    "summary": "Power distribution, backup supplies, lighting and electrical protection, from engineering and installation through testing and maintenance.",
+    "groups": [
+      {
+        "title": "Electrical engineering & installation",
+        "items": [
+          "Substation layout, civil interfaces, utility liaison and energisation coordination.",
+          "HT/LT switchgear selection, protection coordination, settings and cable-sizing support.",
+          "Transformer and diesel-generator sizing, redundancy, synchronisation and load-transfer planning.",
+          "MCC, PCC and automatic power factor correction (APFC) panels, motor controls and metering.",
+          "Lighting design, small power, containment, equipotential bonding and surge protection, with installation and testing under the agreed package."
+        ]
+      },
+      {
+        "title": "Power distribution",
+        "items": [
+          "Operation and monitoring of HT/LT panels, transformers, RMUs, PCCs, MCCs, main distribution boards, sub-panels and busways/bus ducts.",
+          "Inspection for overheating, abnormal noise, damage, cable termination issues, busbar condition and panel indications.",
+          "Recording of voltage, current, frequency, power factor and energy consumption.",
+          "Scheduled thermography and electrical testing under the approved maintenance plan."
+        ]
+      },
+      {
+        "title": "Backup & critical power",
+        "items": [
+          "Inspection, operation and testing coordination for diesel generators, AMF/ATS panels, batteries and auxiliaries.",
+          "Monitoring and maintenance coordination for UPS systems, inverters, battery banks and critical power supplies.",
+          "Response to power failures, nuisance tripping, electrical faults and emergency breakdowns.",
+          "Solar power system monitoring and specialist maintenance coordination where included in the contract."
+        ]
+      },
+      {
+        "title": "Lighting & electrical safety",
+        "items": [
+          "Internal, external and emergency lighting maintenance, including energy-efficient lighting controls.",
+          "Replacement of defective lamps, LED drivers, switches, sockets, MCBs and approved minor accessories.",
+          "Inspection of earthing connections and scheduled resistance testing of grounding systems.",
+          "Lightning protection system inspections and scheduled testing.",
+          "Electrical logs, meter readings, maintenance records and test reports."
+        ]
+      }
+    ],
+    "resources": [
+      "Equipment: transformers, RMUs, diesel generators, distribution boards and UPS systems.",
+      "Tools: cable-pulling winches, wire strippers, hydraulic lug crimpers, conduit benders and knockout punches.",
+      "Instruments: multimeters, clamp meters, insulation testers, earth resistance testers, lux meters and phase rotation meters.",
+      "Spares: cable lugs, ferrules, glands, insulation tape, heat-shrink sleeves, terminals, cable ties, MCBs, MCCBs, contactors, relays, fuses, indicator lamps, LED lamps/drivers, flexible wires, switches, sockets and junction boxes.",
+      "Safety equipment: insulated mats and task-appropriate electrical and arc-flash protection."
+    ],
+    "note": "Solar maintenance, OEM specialist services, major spares and capital replacements are separately scoped. Switching, isolation and testing follow approved site procedures."
+  },
+  {
+    "slug": "elv-building-automation",
+    "title": "ELV & Building Automation",
+    "short": "ELV & Automation",
+    "summary": "Integrated building controls, security, data and communication systems, with design-stage interfaces and ongoing technical support.",
+    "groups": [
+      {
+        "title": "Smart-building integration",
+        "items": [
+          "CCTV camera placement, storage sizing and retention-policy configuration against client requirements.",
+          "Access systems including boom barriers and visitor-management interfaces.",
+          "Data and fibre backbones, containment and structured-cabling testing.",
+          "Network-room racks, UPS provision, cooling interfaces and labelling standards.",
+          "BMS/IBMS points schedules, graphics, alarms, trends and operational dashboards.",
+          "Automation scheduling, interlocks, demand-based operation and fire-alarm/evacuation interfaces defined during design."
+        ]
+      },
+      {
+        "title": "Building management systems",
+        "items": [
+          "BMS and building automation monitoring, alarm review and coordination of system faults.",
+          "Review of HVAC operating schedules, temperature settings and connected controls.",
+          "Troubleshooting coordination for sensors, actuators and building automation software interfaces."
+        ]
+      },
+      {
+        "title": "Security & communications",
+        "items": [
+          "CCTV and access control system inspection, fault logging and specialist service coordination.",
+          "Structured cabling, intercom and public address / voice alarm (PA/VA) system support.",
+          "Coordination of interfaces between automation, fire detection, alarms and emergency communication systems."
+        ]
+      },
+      {
+        "title": "Technical service coordination",
+        "items": [
+          "ELV/BMS technician deployment and work-order management within the agreed staffing plan.",
+          "Coordination of OEM visits, outsourced diagnostics, warranty claims and corrective actions.",
+          "Maintenance history, alarm records, service reports and closure tracking."
+        ]
+      }
+    ],
+    "resources": [
+      "Systems covered may include BMS controllers, CCTV, access control devices, intercoms, structured cabling and PA/VA equipment.",
+      "Diagnostic instruments, replacement parts and specialist software access are agreed for the installed systems."
+    ],
+    "note": "Supported brands, software access, specialist servicing and replacement parts are confirmed against the site's asset register and contract."
+  },
+  {
+    "slug": "plumbing-water-management",
+    "title": "Plumbing, PHE & Water Management",
+    "short": "Plumbing & Water",
+    "summary": "Water supply, sanitation, drainage, treatment and pumping systems, from coordinated delivery to everyday facility operations.",
+    "groups": [
+      {
+        "title": "PHE engineering & system delivery",
+        "items": [
+          "Hot/cold water distribution, insulation, pressure zoning and sanitary-fixture installation.",
+          "Soil and waste stacks, vents, traps and gravity-drainage design coordination.",
+          "External drainage networks, chambers and civic-mains connection coordination.",
+          "Roof drainage, surface run-off and recharge provisions.",
+          "WTP/STP packages, booster sets, sumps, control panels and redundancy arrangements, with installation, testing and commissioning where contracted."
+        ]
+      },
+      {
+        "title": "Water supply & storage",
+        "items": [
+          "Operation and inspection of domestic cold/hot water supply, transfer pumps and hydro-pneumatic systems.",
+          "Inspection of overhead and underground tanks, water storage arrangements and water heaters.",
+          "Monitoring of water levels, pressure, pump operation and leakage.",
+          "Checks of valves, strainers, non-return valves, pressure gauges and pipe connections.",
+          "Coordination of scheduled water-tank cleaning and water-quality testing."
+        ]
+      },
+      {
+        "title": "Sanitation & drainage",
+        "items": [
+          "Leak attendance for water supply, drainage and plumbing lines.",
+          "Maintenance of sinks, toilets, faucets, flush valves, showers, sensor taps and sanitary fittings.",
+          "Clearing minor blockages in traps, floor drains and accessible drainage lines.",
+          "Inspection of sewage pumps, sump pumps and drainage pumping systems.",
+          "Rainwater drainage, stormwater pumps, accessible manholes, greywater systems and rainwater harvesting structures."
+        ]
+      },
+      {
+        "title": "Treatment & monitoring",
+        "items": [
+          "STP, ETP, filtration and water-treatment system operation, monitoring and maintenance where contracted.",
+          "Water-quality testing coordination for treatment and recycling units.",
+          "Water consumption records, pump logs, leakage reports and preventive maintenance records."
+        ]
+      }
+    ],
+    "resources": [
+      "Equipment: transfer pumps, submersible sewage pumps, filtration units, water heaters and hydro-pneumatic tanks.",
+      "Tools: pipe and basin wrenches, PVC/PPR fusion equipment, pipe cutters and pipe vices.",
+      "Instruments: hydraulic pressure-test pumps and drain inspection cameras.",
+      "Spares: PVC, CPVC, PPR and GI pipes, elbows, tees, reducers, sockets, end caps, ball/check/butterfly/pressure-reducing valves, faucet cartridges, flush valves and sensor taps.",
+      "Repair consumables: PTFE tape, solvent cement, silicone sealants, rubber gaskets and pipe clamps."
+    ],
+    "note": "STP/ETP and pump maintenance, specialist treatment work and associated consumables are subject to a separately agreed scope and charges where applicable."
+  },
+  {
+    "slug": "fire-life-safety",
+    "title": "Fire Protection & Life Safety",
+    "short": "Fire & Life Safety",
+    "summary": "Fire detection, suppression and life-safety systems, with engineering, installation, testing, authority liaison and maintenance within the agreed scope.",
+    "groups": [
+      {
+        "title": "Fire-system engineering & delivery",
+        "items": [
+          "Addressable detection panels, detector zoning and BMS/public-address interfaces.",
+          "Wet riser, hydrant and hose-reel networks, with occupancy-based system sizing.",
+          "Wet/dry sprinkler systems, hazard assessment and hydraulic calculations within the approved design scope.",
+          "Clean-agent and water-mist suppression for server, electrical-panel and kitchen risks as specified.",
+          "Extinguisher type selection, placement, refill coordination and inspection records.",
+          "Testing, witnessing and local fire-authority approval liaison within the agreed project package."
+        ]
+      },
+      {
+        "title": "Fire water & suppression systems",
+        "items": [
+          "Inspection of main electric, diesel standby, jockey and booster pumps, fire-water tanks and pump-room conditions.",
+          "Checks of hydrants, wet risers, hose reels, landing valves, hoses and nozzles.",
+          "Inspection of sprinkler networks, deluge systems, control valves, flow switches and pressure gauges.",
+          "Clean-agent gas suppression system service coordination for server rooms, electrical rooms and other critical assets.",
+          "Fire extinguisher checks for access, seals, pressure and service validity."
+        ]
+      },
+      {
+        "title": "Detection, alarms & interfaces",
+        "items": [
+          "Inspection of fire alarm panels, smoke/heat detectors, manual call points and sounders.",
+          "Review of system faults, isolations and alarm event logs.",
+          "Scheduled testing of emergency interfaces, cause-and-effect logic and shutdown interlocks.",
+          "Emergency exit, exit signage and fire-door functionality checks where included."
+        ]
+      },
+      {
+        "title": "Testing & emergency preparedness",
+        "items": [
+          "Scheduled testing of pumps, alarms and protection systems under approved procedures.",
+          "Coordination of fire audits, mock drills and emergency response activities, including six-monthly mock drills where specified in the approved site plan.",
+          "Fire system impairment controls and coordination of necessary authority approvals, including CFO approvals where applicable to the site.",
+          "Equipment registers, inspection reports, test records and statutory documentation support."
+        ]
+      }
+    ],
+    "resources": [
+      "Equipment: fire pumps, storage tanks and specified clean-agent cylinders, including installed FM-200/Novec-type systems where applicable.",
+      "Tools: pipe grooving, welding and hole-cutting equipment and heavy-duty pipe clamps for approved work.",
+      "Instruments: hydrostatic test pumps, flow meters and fire alarm loop testers.",
+      "Spares: pendent/upright sprinklers, guards, flexible drop hoses, hose-reel seals, landing-valve washers and manual call point glass.",
+      "Extinguisher and signage items: dry-powder/CO2 extinguisher gauges, safety pins, tamper seals and emergency direction signs."
+    ],
+    "note": "Testing and maintenance follow applicable local requirements, approved procedures and manufacturer recommendations. Drill frequency and required authority approvals are agreed for the facility; specialist servicing is separately defined."
+  },
+  {
+    "slug": "vertical-transportation",
+    "title": "Lifts & Vertical Transportation",
+    "short": "Lifts & Escalators",
+    "summary": "Maintenance coordination, specialist attendance and safe material-handling support for elevators, escalators and moving walks.",
+    "groups": [
+      {
+        "title": "Maintenance coordination",
+        "items": [
+          "Coordination of OEM and specialist maintenance for elevators, escalators and moving walks.",
+          "Logging of faults, service attendance, equipment condition and maintenance history.",
+          "Coordination of approved inspections, corrective work and specialist diagnostics."
+        ]
+      },
+      {
+        "title": "Mechanical & diagnostic support",
+        "items": [
+          "Approved specialist work involving brackets, guide-rail alignment, cable or belt tension, lubrication and door/panel alignment.",
+          "Electrical safety-circuit checks and controller diagnostics using compatible authorised service tools.",
+          "Hydraulic pressure measurement and checks for overheating, abnormal sound and vibration."
+        ]
+      },
+      {
+        "title": "Lifting & work-area safety",
+        "items": [
+          "Coordination of lifting, rigging and material movement using appropriately rated equipment.",
+          "Task-specific fall protection, landing barriers, guard nets and controlled work areas.",
+          "Safe-work planning for open hoistways, elevator cars, heavy machines and escalator assemblies."
+        ]
+      }
+    ],
+    "resources": [
+      "Hand tools: wrench/ratchet sets, screwdrivers, pliers, alignment tools, straightedges, tension gauges, lubrication guns, door wedges and air shims.",
+      "Handling equipment: chain hoists, pulley blocks, rated wire-rope/web slings, shackles, eyebolts, hydraulic jacks/cylinders and lifting levellers.",
+      "Diagnostics: multimeters, compatible OEM controller test tools, digital hydraulic pressure gauges, infrared thermometers and sound-level meters.",
+      "PPE and barriers: full-body harnesses, lanyards, hard hats, eye protection, steel-toed boots, gloves, landing-door guard nets and safety barriers."
+    ],
+    "note": "Lift and escalator maintenance is a separately scoped specialist service. Equipment access, diagnostics, parts, repair responsibilities and charges are confirmed with the approved OEM/service partner."
+  },
+  {
+    "slug": "workplace-facility-services",
+    "title": "Workplace & Facility Support",
+    "short": "Workplace Services",
+    "summary": "Coordinated workplace services, vendor management and facility administration to support safe, functional working environments.",
+    "groups": [
+      {
+        "title": "Soft FM & workplace operations",
+        "items": [
+          "Daily, periodic and deep housekeeping cycles planned by area type.",
+          "Waste segregation, storage and authorised disposal coordination.",
+          "Mechanised cleaning, including scrubbing, facade cleaning and high-level access through appropriately equipped service teams.",
+          "Washroom consumables, sanitisation and pest-control coordination.",
+          "Manned guarding coordination, access records and patrol logs.",
+          "Horticulture, landscape care, reception and front-desk support."
+        ]
+      },
+      {
+        "title": "Workplace services",
+        "items": [
+          "Coordination of housekeeping, security services, landscaping and facility utilities.",
+          "Space utilisation planning and workplace improvement initiatives.",
+          "Facility improvement projects that support efficiency, sustainability and occupant satisfaction."
+        ]
+      },
+      {
+        "title": "Vendor & commercial administration",
+        "items": [
+          "Facilities-related vendor, contractor and service-provider coordination.",
+          "Facility budget monitoring, operating-cost review and resource utilisation tracking.",
+          "OEM attendance, specialist contractor management, warranty claims and outsourced testing coordination."
+        ]
+      },
+      {
+        "title": "Safety & operational continuity",
+        "items": [
+          "Coordination of health, safety, environmental and facility compliance activities.",
+          "Support for business continuity, emergency preparedness and operational risk management.",
+          "Permit-to-work, lockout/tagout, PPE, electrical isolation and safe-work procedure coordination.",
+          "Facility records, maintenance schedules, asset inventories and workplace service reports."
+        ]
+      }
+    ],
+    "resources": [
+      "Site-specific staffing may include facility/operations managers, discipline leads, helpdesk, MIS/admin support, EHS and energy-monitoring roles.",
+      "Housekeeping, security, landscaping and specialist services are coordinated through the agreed delivery model."
+    ],
+    "note": "Manpower, service hours, vendor responsibilities and workplace service inclusions are specified for each facility. Staffing is based on the site's needs and agreed service levels."
+  },
+  {
+    "slug": "maintenance-asset-management",
+    "title": "Maintenance, Assets & Technical Support",
+    "short": "Maintenance & Assets",
+    "summary": "A shared maintenance framework covering planned servicing, breakdown response, asset records, utilities, spares and reporting.",
+    "groups": [
+      {
+        "title": "Lifecycle contracts & service governance",
+        "items": [
+          "Preventive, corrective and breakdown maintenance across civil/building fabric, MEP, ELV and utility systems within the agreed asset boundary.",
+          "AMC/CAMC coverage, asset warranty status, vendor attendance and contract renewal tracking.",
+          "Asset replacement forecasts and capital-budget planning support.",
+          "Response, resolution, availability, PPM completion and downtime KPIs reviewed against agreed targets.",
+          "Monthly owner reviews, transparent consumables/vendor-cost reporting and documented handovers when site teams change, where included in the contract."
+        ]
+      },
+      {
+        "title": "Planned & corrective maintenance",
+        "items": [
+          "Daily equipment rounds, meter readings, alarm monitoring and operating-status checks.",
+          "Preventive maintenance schedules covering daily, weekly, monthly, quarterly, half-yearly and annual tasks as applicable.",
+          "Scheduled servicing, calibration and inspections for maintainable assets.",
+          "Fault diagnosis, minor repairs, approved consumable replacement and restoration of services.",
+          "Breakdown complaint registration, prioritisation, response, escalation and closure; round-the-clock shift coverage where contracted."
+        ]
+      },
+      {
+        "title": "Helpdesk, assets & performance",
+        "items": [
+          "Helpdesk and computerised maintenance management system (CMMS) work-order logging.",
+          "Tracking of response/restoration SLAs, maintenance history, equipment health and recurring faults.",
+          "Asset lifecycle planning, retrofit recommendations and equipment-replacement planning.",
+          "Electricity, fuel and water consumption monitoring and equipment efficiency review.",
+          "Coordination of applicable inspections, tests, licences, renewals and statutory records."
+        ]
+      },
+      {
+        "title": "Stores & material handling",
+        "items": [
+          "Critical-spares and consumables inventory, minimum stock levels and procurement follow-up.",
+          "Materials/stock loading, unloading and handling coordination within the agreed site scope.",
+          "Stock receipt, issue, consumption and reorder tracking across HVAC, electrical, plumbing and fire systems.",
+          "Coordination of task-appropriate tools, testing equipment, lifting equipment and PPE."
+        ]
+      },
+      {
+        "title": "Service organisation",
+        "items": [
+          "Site-specific facility leadership, operations management and discipline-level technical supervision.",
+          "Helpdesk/CMMS, EHS, energy monitoring, MIS and administration support.",
+          "Deployment coordination for HVAC operators, electricians, plumbers, STP operators, fire technicians, ELV/BMS technicians, helpers and storekeepers.",
+          "In-house and specialist-partner delivery models with agreed shifts, escalation routes and accountability."
+        ]
+      }
+    ],
+    "resources": [
+      "Asset register: equipment identification, location, capacity and criticality.",
+      "PPM calendar: approved maintenance frequency for each maintainable asset.",
+      "Daily logs: operating status, readings, alarms and abnormalities.",
+      "Work-order register: complaint, priority, response time, actions and closure.",
+      "Breakdown reports: root cause, corrective action, downtime and recurrence.",
+      "Testing reports: HVAC, electrical, plumbing and fire-system test results.",
+      "Compliance register: applicable requirements and renewal dates.",
+      "Monthly FM report: PPM completion, breakdowns, downtime, utility use and pending issues.",
+      "Spares register: stock, consumption, reorder levels and outstanding procurement."
+    ],
+    "note": "Response and restoration times, 24/7 coverage, staffing, maintenance frequencies, tools, consumables, spares and testing responsibilities are agreed in the contract. Major replacements, upgrades, modifications, statutory fees and specialist work are priced separately where applicable."
+  }
+]
