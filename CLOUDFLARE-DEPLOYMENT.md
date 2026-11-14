@@ -29,6 +29,8 @@ The homepage is served at `/` and pages such as About and Team at `/about` and `
 
 ## Enquiries
 
+Optional private Google Sheets delivery is documented in `GOOGLE-SHEETS-SETUP.md`. It stays disabled until the deployed Apps Script URL and shared secret are configured; an ordinary spreadsheet link alone does not enable it.
+
 API requests use the Worker; the 30 pages are served from a public-only asset directory. No source scripts, private records, credentials or source presentations are static assets.
 
 The SQLite-backed Durable Object `EnquiryRegister` stores the private register. The configuration includes its binding and initial class migration, so no manually created database ID is required. Storage/use is governed by the Cloudflare account's plan and limits. Review records through **Cloudflare → Durable Objects → EnquiryRegister → Data Studio**, table `enquiries`. No public record-list API is exposed.

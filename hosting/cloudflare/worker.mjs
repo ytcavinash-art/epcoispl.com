@@ -1,3 +1,4 @@
+import {deliverToGoogleSheet,syncGoogleSheet} from './google-sheets.mjs';
 const HEADERS = {'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store','X-Content-Type-Options':'nosniff','Referrer-Policy':'strict-origin-when-cross-origin'};
 const SERVICES = new Set(['General enquiry','Engineering','Procurement','Supply & Trading','Construction','Project Management','Turnkey Solutions','Energy & Sustainability','Integrated Facility Management','Careers','Mechanical & HVAC','Electrical & Power Systems','ELV & Building Automation','Plumbing, PHE & Water Management','Fire Protection & Life Safety','Lifts & Vertical Transportation','Workplace & Facility Support','Maintenance, Assets & Technical Support']);
 const json=(status,data,headers={})=>new Response(JSON.stringify(data),{status,headers:{...HEADERS,...headers}});
@@ -40,11 +41,12 @@ export default {
    const bytes=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(request.headers.get('CF-Connecting-IP')||'local'));
    const ipHash=Array.from(new Uint8Array(bytes),b=>b.toString(16).padStart(2,'0')).join('');
    const id=crypto.randomUUID(),stub=env.ENQUIRIES.get(env.ENQUIRIES.idFromName('epco-enquiry-register'));
-   const record={id,...data,ipHash};
+   const record={id,...data,ipHash,createdAt:new Date().toISOString()};
    const saved=await stub.fetch('https://enquiries.internal/submit',{method:'POST',body:JSON.stringify(record)});
    if(!saved.ok)return new Response(saved.body,{status:saved.status,headers:{...HEADERS,...(saved.status===429?{'Retry-After':'900'}:{})}});
    // Keep the receipt fast. Provider errors cannot discard the saved enquiry.
    ctx.waitUntil(notification(record,env,stub).catch(()=>console.error('Enquiry saved; notification update failed.')));
+   ctx.waitUntil(syncGoogleSheet(record,env,stub).catch(()=>console.error('Enquiry saved; spreadsheet status update failed.')));
    return json(201,{ok:true,reference:id,message:'Your enquiry has been received. Please keep this reference for follow-up.'});
   }catch{return json(503,{error:'We could not save your enquiry right now. Please try again or call +91 91674 85843.'});}
  }
@@ -55,10 +57,18 @@ export class EnquiryRegister {
   this.sql.exec('CREATE TABLE IF NOT EXISTS enquiries (id TEXT PRIMARY KEY, created_at INTEGER NOT NULL, name TEXT NOT NULL, email TEXT NOT NULL, phone TEXT NOT NULL, service TEXT NOT NULL, message TEXT NOT NULL, notification TEXT NOT NULL)');
   this.sql.exec('CREATE INDEX IF NOT EXISTS enquiries_created ON enquiries(created_at)');
   this.sql.exec('CREATE TABLE IF NOT EXISTS request_limits (ip_hash TEXT PRIMARY KEY, attempts INTEGER NOT NULL, reset_at INTEGER NOT NULL)');
+  // Add delivery tracking without replacing existing records or re-sending old data.
+  const columns=new Set(this.sql.exec('PRAGMA table_info(enquiries)').toArray().map(row=>row.name));
+  if(!columns.has('sheet_status'))this.sql.exec("ALTER TABLE enquiries ADD COLUMN sheet_status TEXT NOT NULL DEFAULT 'not-configured'");
+  if(!columns.has('sheet_attempts'))this.sql.exec('ALTER TABLE enquiries ADD COLUMN sheet_attempts INTEGER NOT NULL DEFAULT 0');
  }
  async fetch(request){
   const url=new URL(request.url);if(request.method!=='POST')return json(405,{error:'Method not allowed.'});
   const input=await request.json();
+  if(url.pathname==='/sheet-status'){
+   if(!['synced','failed'].includes(input.state))return json(400,{error:'Invalid status.'});
+   this.sql.exec('UPDATE enquiries SET sheet_status = ?, sheet_attempts = sheet_attempts + 1 WHERE id = ?',input.state,input.id);return json(200,{ok:true});
+  }
   if(url.pathname==='/notification'){
    if(!['sent','failed','not-configured'].includes(input.state))return json(400,{error:'Invalid status.'});
    this.sql.exec('UPDATE enquiries SET notification = ? WHERE id = ?',input.state,input.id);return json(200,{ok:true});
@@ -75,6 +85,7 @@ export class EnquiryRegister {
    if(rate&&rate.attempts>=5)return false;
    this.sql.exec('INSERT INTO request_limits (ip_hash, attempts, reset_at) VALUES (?, 1, ?) ON CONFLICT(ip_hash) DO UPDATE SET attempts = attempts + 1',input.ipHash,now+900000);
    this.sql.exec('INSERT INTO enquiries (id, created_at, name, email, phone, service, message, notification) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',input.id,now,data.name,data.email,data.phone,data.service,data.message,this.env.RESEND_API_KEY&&this.env.ENQUIRY_FROM?'pending':'not-configured');
+   if(this.env.GOOGLE_SHEETS_WEBHOOK_URL&&this.env.GOOGLE_SHEETS_WEBHOOK_SECRET)this.sql.exec("UPDATE enquiries SET sheet_status = 'pending' WHERE id = ?",input.id);
    return true;
   });
   if(!accepted)return json(429,{error:'Too many attempts. Please try again in 15 minutes or call EPCO.'});
@@ -85,6 +96,13 @@ export class EnquiryRegister {
   const days=Number(this.env.ENQUIRY_RETENTION_DAYS||90);if(!Number.isFinite(days)||days<1)throw new Error('Invalid retention setting.');
   this.sql.exec('DELETE FROM enquiries WHERE created_at < ?',Date.now()-days*86400000);
   this.sql.exec('DELETE FROM request_limits WHERE reset_at <= ?',Date.now());
+  if(this.env.GOOGLE_SHEETS_WEBHOOK_URL&&this.env.GOOGLE_SHEETS_WEBHOOK_SECRET){
+   const pending=this.sql.exec("SELECT * FROM enquiries WHERE sheet_status IN ('pending','failed') AND sheet_attempts < 5 ORDER BY created_at LIMIT 5").toArray();
+   await Promise.all(pending.map(async row=>{
+    const state=await deliverToGoogleSheet({id:row.id,createdAt:new Date(row.created_at).toISOString(),name:row.name,email:row.email,phone:row.phone,service:row.service,message:row.message},this.env);
+    if(state!=='not-configured')this.sql.exec('UPDATE enquiries SET sheet_status = ?, sheet_attempts = sheet_attempts + 1 WHERE id = ?',state,row.id);
+   }));
+  }
   const {count}=this.sql.exec('SELECT COUNT(*) AS count FROM enquiries').one();
   if(count>0)await this.ctx.storage.setAlarm(Date.now()+3600000);
  }

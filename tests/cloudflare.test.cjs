@@ -21,7 +21,7 @@ test('Worker enforces per-visitor request limits without blocking other visitors
  const h=await harness();try{for(let i=0;i<5;i++)assert.equal((await h.send()).status,201);const blocked=await h.send();assert.equal(blocked.status,429);assert.equal(blocked.headers.get('retry-after'),'900');assert.equal((await h.send(h.valid,{'CF-Connecting-IP':'192.0.2.2'})).status,201);await Promise.all(h.jobs);}finally{h.db.close();}
 });
 test('Worker retention alarms delete expired enquiries and reschedule retained records',async()=>{
- const h=await harness();try{await h.send();await Promise.all(h.jobs);h.db.prepare('INSERT INTO enquiries VALUES (?, ?, ?, ?, ?, ?, ?, ?)').run('old-record',Date.now()-91*86400000,'Test','old@example.com','','Engineering','Old test','not-configured');await h.object.alarm();assert.equal(h.db.prepare('SELECT COUNT(*) AS n FROM enquiries').get().n,1);assert(await h.storage.getAlarm());}finally{h.db.close();}
+ const h=await harness();try{await h.send();await Promise.all(h.jobs);h.db.prepare('INSERT INTO enquiries (id, created_at, name, email, phone, service, message, notification) VALUES (?, ?, ?, ?, ?, ?, ?, ?)').run('old-record',Date.now()-91*86400000,'Test','old@example.com','','Engineering','Old test','not-configured');await h.object.alarm();assert.equal(h.db.prepare('SELECT COUNT(*) AS n FROM enquiries').get().n,1);assert(await h.storage.getAlarm());}finally{h.db.close();}
 });
 test('Worker has no public record-list endpoint and fails honestly without storage',async()=>{
  const h=await harness();try{assert.equal((await h.module.default.fetch(new Request('https://epcoispl.com/api/enquiries'),h.env,{})).status,405);assert.equal((await h.module.default.fetch(new Request('https://epcoispl.com/api/admin/enquiries'),h.env,{})).status,404);delete h.env.ENQUIRIES;const response=await h.send();assert.equal(response.status,503);assert(!(await response.json()).ok);assert.equal(await (await h.module.default.fetch(new Request('https://epcoispl.com/'),h.env,{})).text(),'Static page');}finally{h.db.close();}
@@ -41,4 +41,19 @@ test('production navigation, canonicals and sitemap use extensionless URLs',()=>
  const team=fs.readFileSync(path.join(dir,'team.html'),'utf8');assert(team.includes('rel="canonical" href="https://epcoispl.com/team"'));
  const sitemap=fs.readFileSync(path.join(dir,'sitemap.xml'),'utf8');assert(!sitemap.includes('.html'));assert(sitemap.includes('<loc>https://epcoispl.com/</loc>'));
  const config=JSON.parse(fs.readFileSync(path.join(root,'wrangler.jsonc'),'utf8'));assert.equal(config.assets.html_handling,'drop-trailing-slash');
+});
+test('spreadsheet schema upgrade preserves existing enquiries without backfilling them',async()=>{
+ const h=await harness();try{
+  h.db.exec('ALTER TABLE enquiries DROP COLUMN sheet_status');h.db.exec('ALTER TABLE enquiries DROP COLUMN sheet_attempts');
+  h.db.prepare('INSERT INTO enquiries VALUES (?, ?, ?, ?, ?, ?, ?, ?)').run('old-existing-record',Date.now(),'Old visitor','old@example.com','','Engineering','Existing enquiry','not-configured');
+  new h.module.EnquiryRegister({storage:h.storage},{});
+  const row=h.db.prepare('SELECT * FROM enquiries WHERE id = ?').get('old-existing-record');assert.equal(row.message,'Existing enquiry');assert.equal(row.sheet_status,'not-configured');assert.equal(row.sheet_attempts,0);
+ }finally{h.db.close();}
+});
+test('spreadsheet delivery failures preserve the receipt and stop automatic retries after five attempts',async()=>{
+ const h=await harness();try{
+  const config={GOOGLE_SHEETS_WEBHOOK_URL:'https://unapproved.example/exec',GOOGLE_SHEETS_WEBHOOK_SECRET:'a'.repeat(64)};Object.assign(h.env,config);Object.assign(h.object.env,config);
+  assert.equal((await h.send()).status,201);await Promise.all(h.jobs);let row=h.db.prepare('SELECT * FROM enquiries').get();assert.equal(row.sheet_status,'failed');assert.equal(row.sheet_attempts,1);assert.equal(row.message,h.valid.message);
+  for(let i=0;i<6;i++)await h.object.alarm();row=h.db.prepare('SELECT * FROM enquiries').get();assert.equal(row.sheet_attempts,5);assert.equal(row.sheet_status,'failed');
+ }finally{h.db.close();}
 });
