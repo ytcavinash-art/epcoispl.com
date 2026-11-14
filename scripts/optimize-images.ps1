@@ -3,6 +3,7 @@ $projectRoot = Split-Path -Parent $PSScriptRoot
 $codec = [Drawing.Imaging.ImageCodecInfo]::GetImageEncoders() | Where-Object MimeType -eq 'image/jpeg'
 $jobs = @(
     @{ Source='engineering-bim-team.png'; Name='engineering-bim-team'; Sizes=@(480,960) },
+    @{ Source='arpit-gupta.png'; Name='arpit-gupta'; Sizes=@(420,840) },
     @{ Source='subramanian-sekar.png'; Name='subramanian-sekar'; Sizes=@(420,840) }
 )
 foreach ($job in $jobs) {
