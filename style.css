@@ -64,3 +64,5 @@ h1,h2,h3,p,li{overflow-wrap:break-word}h1,h2,h3{hyphens:none}.button,.hero-prima
 
 /* Prominent group identity directly below the main header. */
 .group-heading{padding:24px 6% 20px;background:#f5f8f7;text-align:center;border-bottom:1px solid #e1e9e7}.group-heading p{margin:0;font-family:Manrope,Arial,sans-serif;font-size:clamp(26px,3.6vw,48px);line-height:1.2;font-weight:800;letter-spacing:-.035em;color:#153c50}.hero-new-copy{padding-top:clamp(32px,4vw,56px)}@media(max-width:480px){.group-heading{padding:18px 20px 16px}.group-heading p{font-size:clamp(25px,7.2vw,34px)}.hero-new-copy{padding-top:28px}}
+/* Larger header and brand for the local design preview. */
+:root{--header-height:112px}.header{min-height:var(--header-height);padding-top:18px;padding-bottom:18px}.header .brand img{width:210px;max-width:210px;height:auto}@media(max-width:800px){:root{--header-height:100px}.header{padding-top:16px;padding-bottom:16px}.header .brand img{width:185px;max-width:185px}}@media(max-width:380px){.header .brand img{width:170px;max-width:170px}}
