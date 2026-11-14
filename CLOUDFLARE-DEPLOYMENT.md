@@ -46,6 +46,8 @@ A dry run bundles without publishing. Local testing must use synthetic data and 
 
 After a successful production build, open the Worker URL and inspect Home, Services, Team and Contact. Submit a synthetic enquiry, confirm its reference and private record, and test actual inbox delivery separately if notifications are enabled. Confirm no source/configuration/private files can be downloaded.
 
-Connect `epcoispl.com` in **Domains & Routes** only after verifying the new deployment. Review existing domain routing before changing DNS; do not replace mail records or disable DNSSEC. Production metadata defaults to `https://epcoispl.com/`; set build variable `DEPLOY_SITE_URL` if the preferred domain differs.
+`wrangler.jsonc` declares `epcoispl.com` as a Worker Custom Domain. Deployment connects the hostname directly to this Worker, replacing conflicting website-origin records where necessary; Cloudflare provisions the website DNS record and certificate. This does not require changing nameservers, mail records or DNSSEC. The build token must have Workers Routes Write for this zone as well as permission to deploy the Worker. If domain setup is rejected for missing permissions or because the zone is in another account, resolve that account/zone access before retrying; do not work around it by disabling SSL.
+
+Production metadata defaults to `https://epcoispl.com/`; set build variable `DEPLOY_SITE_URL` if the preferred domain differs.
 
 This local fix does not itself update GitHub, retry a remote build or prove a production deployment succeeded.

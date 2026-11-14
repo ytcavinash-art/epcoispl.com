@@ -5,6 +5,7 @@
   "compatibility_date": "2025-11-01",
   "workers_dev": true,
   "keep_vars": true,
+  "routes": [{ "pattern": "epcoispl.com", "custom_domain": true }],
   "build": { "command": "npm run build:cloudflare" },
   "assets": {
     "directory": "./public-cloudflare",
