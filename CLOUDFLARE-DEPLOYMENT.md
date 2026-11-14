@@ -23,6 +23,10 @@ Do not retry an unchanged commit expecting local fixes to appear remotely.
 
 References: [static assets](https://developers.cloudflare.com/workers/static-assets/), [Wrangler configuration](https://developers.cloudflare.com/workers/wrangler/configuration/), [build configuration](https://developers.cloudflare.com/workers/ci-cd/builds/configuration/).
 
+## Clean public URLs
+
+The homepage is served at `/` and pages such as About and Team at `/about` and `/team`. Cloudflare redirects the corresponding `.html` URLs and trailing-slash variants to their clean forms. Production navigation, canonical URLs and the sitemap use these clean paths. The source files remain `about.html`, `team.html`, etc.; do not rename or delete them to change the public URL. The local Node preview continues to accept the original source filenames.
+
 ## Enquiries
 
 API requests use the Worker; the 30 pages are served from a public-only asset directory. No source scripts, private records, credentials or source presentations are static assets.

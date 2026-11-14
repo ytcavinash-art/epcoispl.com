@@ -53,8 +53,9 @@ window.matchMedia('(max-width: 1200px)').addEventListener('change', () => closeM
 const year = document.querySelector('#year');
 if (year) year.textContent = new Date().getFullYear();
 const currentPage = location.pathname.split('/').pop() || 'index.html';
+const pageName = value => value.split(/[?#]/)[0].replace(/^\/+/, '').replace(/\.html$/, '') || 'index';
 nav?.querySelectorAll('a').forEach(link => {
-  if (link.getAttribute('href') === currentPage) link.setAttribute('aria-current', 'page');
+  if (pageName(link.getAttribute('href')) === pageName(currentPage)) link.setAttribute('aria-current', 'page');
 });
 const requestedService = new URLSearchParams(location.search).get('service');
 const serviceSelect = document.querySelector('#enquiry-service');

@@ -29,9 +29,16 @@ test('Worker has no public record-list endpoint and fails honestly without stora
 test('Cloudflare build stages only public files and root-domain metadata',()=>{
  const root=path.resolve(__dirname,'..'),publicDir=path.join(root,'public-cloudflare');if(!fs.existsSync(publicDir))return;
  const pages=fs.readdirSync(publicDir).filter(f=>f.endsWith('.html'));assert.equal(pages.length,30);
- for(const file of pages){const html=fs.readFileSync(path.join(publicDir,file),'utf8');assert(!html.includes('https://www.epcoispl.com/in/'));for(const [,value]of html.matchAll(/(?:href|src|action)="([^"]+)"/g)){if(/^(https?:|mailto:|tel:)/.test(value)||value==='api/enquiries')continue;const target=value.split('#')[0].split('?')[0]||file;assert(fs.existsSync(path.join(publicDir,target)),file+': '+value);}}
+ for(const file of pages){const html=fs.readFileSync(path.join(publicDir,file),'utf8');assert(!html.includes('https://www.epcoispl.com/in/'));for(const [,value]of html.matchAll(/(?:href|src|action)="([^"]+)"/g)){if(/^(https?:|mailto:|tel:)/.test(value)||value==='api/enquiries')continue;let target=value.split('#')[0].split('?')[0];if(!target)target=file;else if(target==='/')target='index.html';else {target=target.replace(/^\//,'');if(!path.extname(target))target+='.html';}assert(fs.existsSync(path.join(publicDir,target)),file+': '+value);}}
  for(const file of ['.env','.data','server.cjs','hosting','scripts','tests','releases'])assert(!fs.existsSync(path.join(publicDir,file)),file);
 });
-test('Worker maps the domain root to index.html while retaining explicit HTML URLs',async()=>{
- const h=await harness();try{let requested;h.env.ASSETS.fetch=async request=>{requested=new URL(request.url).pathname;return new Response('Home');};await h.module.default.fetch(new Request('https://epcoispl.com/'),h.env,{});assert.equal(requested,'/index.html');await h.module.default.fetch(new Request('https://epcoispl.com/team.html'),h.env,{});assert.equal(requested,'/team.html');}finally{h.db.close();}
+test('Worker preserves clean paths for Cloudflare asset resolution without redirect loops',async()=>{
+ const h=await harness();try{let requested;h.env.ASSETS.fetch=async request=>{requested=new URL(request.url).pathname;return new Response('Home');};await h.module.default.fetch(new Request('https://epcoispl.com/'),h.env,{});assert.equal(requested,'/');await h.module.default.fetch(new Request('https://epcoispl.com/team'),h.env,{});assert.equal(requested,'/team');}finally{h.db.close();}
+});
+test('production navigation, canonicals and sitemap use extensionless URLs',()=>{
+ const root=path.resolve(__dirname,'..'),dir=path.join(root,'public-cloudflare');
+ const home=fs.readFileSync(path.join(dir,'index.html'),'utf8');assert(home.includes('href="/about"'));assert(home.includes('href="/"'));assert(!/href="[^"?#]*\.html(?:[?#"])/.test(home));
+ const team=fs.readFileSync(path.join(dir,'team.html'),'utf8');assert(team.includes('rel="canonical" href="https://epcoispl.com/team"'));
+ const sitemap=fs.readFileSync(path.join(dir,'sitemap.xml'),'utf8');assert(!sitemap.includes('.html'));assert(sitemap.includes('<loc>https://epcoispl.com/</loc>'));
+ const config=JSON.parse(fs.readFileSync(path.join(root,'wrangler.jsonc'),'utf8'));assert.equal(config.assets.html_handling,'drop-trailing-slash');
 });

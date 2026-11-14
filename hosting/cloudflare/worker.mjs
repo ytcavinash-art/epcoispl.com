@@ -26,10 +26,7 @@ async function notification(record,env,stub){
 export default {
  async fetch(request,env,ctx){
   const url=new URL(request.url);
-  if(!url.pathname.startsWith('/api/')){
-   if(url.pathname==='/'){url.pathname='/index.html';return env.ASSETS.fetch(new Request(url,request));}
-   return env.ASSETS.fetch(request);
-  }
+  if(!url.pathname.startsWith('/api/'))return env.ASSETS.fetch(request);
   if(url.pathname!=='/api/enquiries')return json(404,{error:'Not found.'});
   if(request.method!=='POST')return json(405,{error:'Use the enquiry form to submit a request.'},{Allow:'POST'});
   if(request.headers.get('sec-fetch-site')==='cross-site')return json(403,{error:'Submit the form from the EPCO website.'});
