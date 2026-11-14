@@ -1,0 +1,16 @@
+{
+  "git.autofetch": true,
+  "git.enableSmartCommit": false,
+  "search.exclude": {
+    "**/.npm-cache*/**": true,
+    "**/.wrangler/**": true,
+    "**/public-cloudflare/**": true,
+    "**/releases/**": true,
+    "**/.data/**": true
+  },
+  "files.watcherExclude": {
+    "**/.npm-cache*/**": true,
+    "**/.wrangler/**": true,
+    "**/node_modules/**": true
+  }
+}

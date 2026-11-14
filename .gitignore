@@ -1,0 +1,13 @@
+.env*
+!.env.example
+.data/
+node_modules/
+test-results/
+.wrangler/
+public-cloudflare/
+releases/
+.dev.vars*
+.npm-cache*/
+*.zip
+*.docx
+*.pptx

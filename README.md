@@ -1,5 +1,7 @@
 # EPCO website
 
+For future edits from this folder, follow [the VS Code → GitHub → Cloudflare workflow](VSCODE-GITHUB-WORKFLOW.md).
+
 For the Cloudflare Workers deployment shown in the dashboard, use [CLOUDFLARE-DEPLOYMENT.md](CLOUDFLARE-DEPLOYMENT.md). The Worker is a separate supported backend; do not upload the PHP archive as a Worker or use the Node HTTP server as the Worker entry point.
 
 ## Run locally
